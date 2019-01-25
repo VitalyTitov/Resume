@@ -116,7 +116,6 @@ namespace ApplicationTest.Controllers
             return RedirectToAction("Index");
         }
 
-
         // GET: User
         public ActionResult onProfile()
         {
@@ -171,6 +170,7 @@ namespace ApplicationTest.Controllers
             return View(profile);
         }
 
+        //Post: Profile/edit
         [HttpPost]
         public ActionResult EditProfile(Profile profile, int[] selectedRoles)
         {
@@ -180,7 +180,7 @@ namespace ApplicationTest.Controllers
             newProfile.Roles.Clear();
             if (selectedRoles != null)
             {
-                //получаем выбранные курсы
+                //получаем выбранные роли
                 foreach (var c in db.Roles.Where(co => selectedRoles.Contains(co.Id)))
                 {
                     newProfile.Roles.Add(c);
