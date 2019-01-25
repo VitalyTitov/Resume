@@ -1,0 +1,36 @@
+﻿
+@model IEnumerable<Test.Models.Profile>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Профили</h2>
+<!--Таблица профилей-->
+<p>
+    @Html.ActionLink("Create New", "CreateProfile")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditProfile", new { id = item.Id }) |
+                @Html.ActionLink("Details", "DetailsProfile", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteProfile", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
