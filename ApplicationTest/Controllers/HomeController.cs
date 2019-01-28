@@ -208,7 +208,7 @@ namespace ApplicationTest.Controllers
         }
 
         // POST: Profile/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteProfile")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmedProfile(int id)
         {
