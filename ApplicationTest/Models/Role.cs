@@ -11,8 +11,8 @@ namespace Test.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        //public int? ProfileId { get; set; }
-        //public virtual Profile Profile { get; set; }
+        public int? ProfileId { get; set; }
+        public virtual Profile Profile { get; set; }
         public virtual ICollection<Profile> Profiles { get; set; }
 
         public Role()

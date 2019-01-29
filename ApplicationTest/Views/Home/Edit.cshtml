@@ -13,7 +13,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>User</h4>
+            <h4>Пользователь</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
@@ -41,7 +41,7 @@
                 {
                     <input type="checkbox" name="selectedProfiles" value="@c.Id"
                            @(Model.Profiles.Contains(c) ? "checked=\"checked\"" : "") />@c.Name <br />
-                    }
+                }
                 <br />
             </div>
             <div class="form-group">

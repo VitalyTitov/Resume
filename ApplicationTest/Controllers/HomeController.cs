@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Test.Models;
 
@@ -37,21 +34,21 @@ namespace ApplicationTest.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
+            ViewBag.Profiles = db.Profiles.ToList();
             return View();
         }
 
         // POST: User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Login")] User user)
+        public ActionResult Create([Bind(Include = "Id,Name,Login,Profiles")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
+                db.Users.Add(user);             
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
+                return RedirectToAction("AddProfilesforUser",user);//добавил юзер в параметр
+            }                      
             return View(user);
         }
 
@@ -74,17 +71,15 @@ namespace ApplicationTest.Controllers
             User newUser = db.Users.Find(user.Id);
             newUser.Name = user.Name;
             newUser.Login= user.Login;
-
             newUser.Profiles.Clear();
             if (selectedProfiles != null)
             {
-                //получаем выбранные курсы
+                //получаем выбранные профили
                 foreach (var c in db.Profiles.Where(co => selectedProfiles.Contains(co.Id)))
                 {
                     newUser.Profiles.Add(c);
                 }
             }
-
             db.Entry(newUser).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -98,6 +93,7 @@ namespace ApplicationTest.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             User user = db.Users.Find(id);
+            
             if (user == null)
             {
                 return HttpNotFound();
@@ -110,19 +106,19 @@ namespace ApplicationTest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
+            User user = db.Users.Find(id);            
             db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        // GET: User
+        // GET: Profile
         public ActionResult onProfile()
         {
             return View(db.Profiles.ToList());
         }
 
-        // GET: User/Details/5
+        // GET: Profile/Details/5
         public ActionResult DetailsProfile(int? id)
         {
             if (id == null)
@@ -137,25 +133,27 @@ namespace ApplicationTest.Controllers
             return View(profile);
         }
 
-        // GET: User/Create
+        // GET: Profile/Create
         public ActionResult CreateProfile()
         {
+            //добавил набор ролей
+            ViewBag.Roles = db.Roles.ToList();
             return View();
         }
 
         // POST: Profile/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateProfile([Bind(Include = "Id,Name")] Profile profile)
+        public ActionResult CreateProfile([Bind(Include = "Id,Name,Roles")] Profile profile)
         {
             if (ModelState.IsValid)
             {
                 db.Profiles.Add(profile);
                 db.SaveChanges();
-                return RedirectToAction("onProfile");
+                //izmenil redurect
+                return RedirectToAction("AddRoleforProfile",profile);
             }
-
-            return View(profile);
+            return PartialView(profile);
         }
 
         //Get: profile/edit
@@ -186,7 +184,6 @@ namespace ApplicationTest.Controllers
                     newProfile.Roles.Add(c);
                 }
             }
-
             db.Entry(newProfile).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("onProfile");
@@ -208,12 +205,66 @@ namespace ApplicationTest.Controllers
         }
 
         // POST: Profile/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteProfile")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmedProfile(int id)
         {
             Profile profile = db.Profiles.Find(id);
             db.Profiles.Remove(profile);
+            db.SaveChanges();           
+            return RedirectToAction("onProfile");
+        }
+
+        // GET: User/AddProfilesforUser
+        [HttpGet]
+        public ActionResult AddProfilesforUser(User user, int? id)
+        {
+            User usernow = db.Users.Find(id);
+            ViewBag.Profiles = db.Profiles.ToList();
+            return View(usernow);
+        }
+        
+        // Post: User/AddProfilesforUser
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddProfilesforUser(User user, int[] selectedProfilesnew)
+        {
+            User userprofile = db.Users.Find(user.Id);
+            if (selectedProfilesnew != null)
+            {
+                foreach (var c in db.Profiles.Where(co => selectedProfilesnew.Contains(co.Id)))
+                {
+                    userprofile.Profiles.Add(c);
+                }
+            }
+            db.Entry(userprofile).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // Get: Profile/AddRoleforProfile
+        [HttpGet]
+        public ActionResult AddRoleforProfile(Profile profile, int? id)
+        {
+            Profile profilenow = db.Profiles.Find(id);
+            ViewBag.Roles = db.Roles.ToList();
+            return View(profilenow);
+        }
+
+        // Post: Profile/AddRoleforProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddRoleforProfile(Profile profile, int[] selectedRolesnew)
+        {
+            Profile profilerole = db.Profiles.Find(profile.Id);
+            if (selectedRolesnew != null)
+            {
+                foreach (var c in db.Roles.Where(co => selectedRolesnew.Contains(co.Id)))
+                {
+                    profilerole.Roles.Add(c);
+                }
+            }
+            db.Entry(profilerole).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("onProfile");
         }

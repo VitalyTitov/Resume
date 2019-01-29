@@ -10,8 +10,8 @@ namespace Test.Models
         public int Id { get; set; }
         public string Name { get; set; }
         //для связи с связующей таблицей
-        //public int? UserId { get; set; }
-        //public virtual User User { get; set; }
+        public int? UserId { get; set; }
+        public virtual User User { get; set; }
 
         //блок для ролей
         public virtual ICollection<Role> Roles { get; set; }

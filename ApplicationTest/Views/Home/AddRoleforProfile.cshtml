@@ -1,0 +1,47 @@
+﻿@model Test.Models.Profile
+@using Test.Models
+@{
+    ViewBag.Title = "AddRoleforProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Выберите роли</h2>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Профили</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    @foreach (Role c in ViewBag.Roles)
+                    {
+                        <input type="checkbox" name="selectedRolesnew" value="@c.Id"
+                               @(Model.Roles.Contains(c) ? "checked=\"checked\"" : "") />@c.Name <br />
+                        }
+                    <br />
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

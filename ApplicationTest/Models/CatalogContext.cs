@@ -22,7 +22,7 @@ namespace Test.Models
             modelBuilder.Entity<Profile>().HasMany(c => c.Users)
                 .WithMany(s => s.Profiles)
                 .Map(t => t.MapLeftKey("ProfileId")
-                .MapRightKey("UserId")
+                .MapRightKey("UserId")               
                 .ToTable("ProfileUser"));
             //создание связующей таблицы Role и Profile
             modelBuilder.Entity<Role>().HasMany(c => c.Profiles)
@@ -30,7 +30,6 @@ namespace Test.Models
                 .Map(t => t.MapLeftKey("RoleId")
                 .MapRightKey("ProfileId")
                 .ToTable("RoleProfile"));
-        }
-        
+        }       
     }
 }

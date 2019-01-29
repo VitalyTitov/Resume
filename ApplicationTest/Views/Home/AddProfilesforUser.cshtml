@@ -1,0 +1,48 @@
+﻿@model Test.Models.User
+@using Test.Models
+@{
+    ViewBag.Title = "AddProfilesforUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Выберите профили</h2>
+
+@using (Html.BeginForm())
+{
+<fieldset>
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Пользователь</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+
+            <div class="col-md-10">
+                @foreach (Profile c in ViewBag.Profiles)
+                {
+                    <input type="checkbox" name="selectedProfilesnew" value="@c.Id"
+                           @(Model.Profiles.Contains(c) ? "checked=\"checked\"" : "") />@c.Name <br />
+                    }
+                <br />
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+ }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+
