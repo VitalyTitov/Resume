@@ -133,6 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfilesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -178,23 +179,22 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
-    <Content Include="Views\Home\CreateProfile.cshtml" />
     <Content Include="Views\Home\Delete.cshtml" />
-    <Content Include="Views\Home\DeleteProfile.cshtml" />
     <Content Include="Views\Home\Details.cshtml" />
-    <Content Include="Views\Home\DetailsProfile.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
-    <Content Include="Views\Home\EditProfile.cshtml" />
-    <Content Include="Views\Home\onProfile.cshtml" />
+    <Content Include="Views\Profiles\onProfile.cshtml" />
     <Content Include="Views\Roles\Create.cshtml" />
     <Content Include="Views\Roles\Delete.cshtml" />
     <Content Include="Views\Roles\Details.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Home\AddProfilesforUser.cshtml" />
-    <Content Include="Views\Home\AddRoleforProfile.cshtml" />
+    <Content Include="Views\Profiles\EditProfile.cshtml" />
+    <Content Include="Views\Profiles\DetailsProfile.cshtml" />
+    <Content Include="Views\Profiles\DeleteProfile.cshtml" />
+    <Content Include="Views\Profiles\CreateProfile.cshtml" />
+    <Content Include="Views\Profiles\AddRoleforProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
